@@ -7,6 +7,7 @@ namespace App\Filament\Resources\Concerts\Pages;
 use App\Filament\Resources\Concerts\ConcertResource;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
+use Filament\Support\Icons\Heroicon;
 
 final class ListConcerts extends ListRecords
 {
@@ -15,7 +16,9 @@ final class ListConcerts extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make(),
+            CreateAction::make()
+                ->label('Ajouter un concert')
+                ->icon(Heroicon::Plus),
         ];
     }
 }
