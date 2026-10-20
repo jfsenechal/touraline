@@ -173,3 +173,36 @@ it('validates the form data', function (array $data, array $errors) {
     '`email` is required' => [['email' => null], ['email' => 'required']],
     '`email` is max 255 characters' => [['email' => Str::random(256)], ['email' => 'max']],
 ]);
+
+it('enforces the password policy', function (string $password) {
+    $user = User::factory()->make();
+
+    livewire(CreateUser::class)
+        ->fillForm([
+            'name' => $user->name,
+            'email' => $user->email,
+            'password' => $password,
+        ])
+        ->call('create')
+        ->assertHasFormErrors(['password'])
+        ->assertNotNotified();
+})->with([
+    'shorter than 12 characters' => 'Short1pass',
+    'no uppercase letter' => 'lowercase12345',
+    'no lowercase letter' => 'UPPERCASE12345',
+    'no digit' => 'NoDigitsInHere',
+]);
+
+it('accepts a password matching the policy', function () {
+    $user = User::factory()->make();
+
+    livewire(CreateUser::class)
+        ->fillForm([
+            'name' => $user->name,
+            'email' => $user->email,
+            'password' => 'Touraline2026Ok',
+        ])
+        ->call('create')
+        ->assertHasNoFormErrors()
+        ->assertNotified();
+});
