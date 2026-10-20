@@ -10,4 +10,6 @@ use Filament\Resources\Pages\CreateRecord;
 final class CreateConcert extends CreateRecord
 {
     protected static string $resource = ConcertResource::class;
+
+    protected static ?string $title = 'Ajouter un concert';
 }

@@ -13,6 +13,8 @@ final class ListConcerts extends ListRecords
 {
     protected static string $resource = ConcertResource::class;
 
+    protected static ?string $title = 'Liste des concerts';
+
     protected function getHeaderActions(): array
     {
         return [
