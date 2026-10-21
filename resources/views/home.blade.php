@@ -328,7 +328,6 @@
             <li class="rounded-2xl bg-brand-50 p-5 ring-1 ring-brand-500/10">
               <p class="font-display text-lg font-semibold text-stone-900">Pierre Vencencius</p>
               <p class="mt-0.5 text-sm font-medium text-brand-700">Président</p>
-              <a href="mailto:p.vencencius@gmail.com" class="mt-3 inline-block text-sm break-all text-stone-600 hover:text-brand-700">p.vencencius@gmail.com</a>
               <a href="tel:+32478921017" class="mt-1 block text-sm text-stone-600 hover:text-brand-700">+32 486 78 88 83</a>
             </li>
             <li class="rounded-2xl bg-brand-50 p-5 ring-1 ring-brand-500/10">
@@ -340,27 +339,23 @@
             <li class="rounded-2xl bg-brand-50 p-5 ring-1 ring-brand-500/10">
               <p class="font-display text-lg font-semibold text-stone-900">Marc Hick</p>
               <p class="mt-0.5 text-sm font-medium text-brand-700">Trésorier</p>
-              <a href="mailto:cramhick@gmail.com" class="mt-3 inline-block text-sm break-all text-stone-600 hover:text-brand-700">cramhick@gmail.com</a>
+              <a href="mailto:choralelatouraline@gmail.com" class="mt-3 inline-block text-sm break-all text-stone-600 hover:text-brand-700">choralelatouraline@gmail.com</a>
             </li>
             <li class="rounded-2xl bg-brand-50 p-5 ring-1 ring-brand-500/10">
               <p class="font-display text-lg font-semibold text-stone-900">Christiane Bellemans</p>
               <p class="mt-0.5 text-sm font-medium text-brand-700">Présidente honoraire &amp; administratrice</p>
-              <a href="mailto:cbabeille7@gmail.com" class="mt-3 inline-block text-sm break-all text-stone-600 hover:text-brand-700">cbabeille7@gmail.com</a>
-            </li>
+             </li>
             <li class="rounded-2xl bg-brand-50 p-5 ring-1 ring-brand-500/10">
               <p class="font-display text-lg font-semibold text-stone-900">Véronique Hauchart</p>
               <p class="mt-0.5 text-sm font-medium text-brand-700">Administratrice</p>
-              <a href="mailto:veflanto@gmail.com" class="mt-3 inline-block text-sm break-all text-stone-600 hover:text-brand-700">veflanto@gmail.com</a>
             </li>
             <li class="rounded-2xl bg-brand-50 p-5 ring-1 ring-brand-500/10">
               <p class="font-display text-lg font-semibold text-stone-900">Isabelle Mottet</p>
               <p class="mt-0.5 text-sm font-medium text-brand-700">Administratrice</p>
-              <a href="mailto:mottet.isabelle@gmail.com" class="mt-3 inline-block text-sm break-all text-stone-600 hover:text-brand-700">mottet.isabelle@gmail.com</a>
             </li>
             <li class="rounded-2xl bg-brand-50 p-5 ring-1 ring-brand-500/10">
               <p class="font-display text-lg font-semibold text-stone-900">Annicq Parmentier</p>
               <p class="mt-0.5 text-sm font-medium text-brand-700">Administratrice</p>
-              <a href="mailto:annicq.parmentier@gmail.com" class="mt-3 inline-block text-sm break-all text-stone-600 hover:text-brand-700">annicq.parmentier@gmail.com</a>
             </li>
           </ul>
 
