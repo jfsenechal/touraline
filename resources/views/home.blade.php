@@ -323,7 +323,6 @@
             <li class="rounded-2xl bg-brand-50 p-5 ring-1 ring-brand-500/10">
               <p class="font-display text-lg font-semibold text-stone-900">Christine Wéry</p>
               <p class="mt-0.5 text-sm font-medium text-brand-700">Cheffe de chœur</p>
-              <a href="mailto:christinewery1@gmail.com" class="mt-3 inline-block text-sm break-all text-stone-600 hover:text-brand-700">christinewery1@gmail.com</a>
             </li>
             <li class="rounded-2xl bg-brand-50 p-5 ring-1 ring-brand-500/10">
               <p class="font-display text-lg font-semibold text-stone-900">Pierre Vencencius</p>
