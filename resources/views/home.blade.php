@@ -325,8 +325,8 @@
               <p class="mt-0.5 text-sm font-medium text-brand-700">Cheffe de chœur</p>
             </li>
             <li class="rounded-2xl bg-brand-50 p-5 ring-1 ring-brand-500/10">
-              <p class="font-display text-lg font-semibold text-stone-900">Pierre Vencencius</p>
-              <p class="mt-0.5 text-sm font-medium text-brand-700">Président</p>
+              <p class="font-display text-lg font-semibold text-stone-900">Nathalie Decoeur</p>
+              <p class="mt-0.5 text-sm font-medium text-brand-700">Présidente ff</p>
               <a href="tel:+32478921017" class="mt-1 block text-sm text-stone-600 hover:text-brand-700">+32 486 78 88 83</a>
             </li>
             <li class="rounded-2xl bg-brand-50 p-5 ring-1 ring-brand-500/10">
