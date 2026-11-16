@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Models\Album;
 use App\Models\Concert;
 
 use function Pest\Laravel\get;
@@ -56,4 +57,57 @@ it('strips unsafe html from the description', function () {
 
 it('returns 404 for an unknown concert', function () {
     get('/concerts/999')->assertNotFound();
+});
+
+it('renders the albums on the home page under "Albums photos"', function () {
+    $album = Album::factory()->create(['photos' => ['albums/cover.jpg', 'albums/second.jpg']]);
+
+    get(route('home'))
+        ->assertOk()
+        ->assertSeeInOrder(['Albums photos', $album->name, $album->description])
+        ->assertSee('2 photos')
+        ->assertSee('albums/cover.jpg')
+        ->assertSee(route('albums.show', $album))
+        ->assertDontSee('assets/img/meme-chante.jpg');
+});
+
+it('shows the chosen cover on the album card', function () {
+    Album::factory()->create([
+        'photos' => ['albums/first.jpg', 'albums/chosen.jpg'],
+        'cover' => 'albums/chosen.jpg',
+    ]);
+
+    get(route('home'))
+        ->assertOk()
+        ->assertSee('albums/chosen.jpg')
+        ->assertDontSee('albums/first.jpg');
+});
+
+it('shows the albums in position order', function () {
+    Album::factory()->create(['name' => 'Album deux', 'position' => 2]);
+    Album::factory()->create(['name' => 'Album un', 'position' => 1]);
+
+    get(route('home'))
+        ->assertOk()
+        ->assertSeeInOrder(['Album un', 'Album deux']);
+});
+
+it('falls back to the default photo grid when there are no albums', function () {
+    get(route('home'))
+        ->assertOk()
+        ->assertSee('assets/img/meme-chante.jpg');
+});
+
+it('renders an album page with its photos in order', function () {
+    $album = Album::factory()->create(['photos' => ['albums/first.jpg', 'albums/second.jpg']]);
+
+    get(route('albums.show', $album))
+        ->assertOk()
+        ->assertSee($album->name)
+        ->assertSee($album->description)
+        ->assertSeeInOrder(['albums/first.jpg', 'albums/second.jpg']);
+});
+
+it('returns 404 for an unknown album', function () {
+    get('/albums/999')->assertNotFound();
 });

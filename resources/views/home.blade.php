@@ -278,32 +278,42 @@
           </p>
         </div>
 
-        <div class="mt-12 grid grid-cols-2 gap-4 md:grid-cols-4">
-          <figure class="col-span-2 row-span-2 overflow-hidden rounded-2xl">
-            <img src="{{ asset('assets/img/choir-group.jpg') }}" alt="Photo de groupe de la chorale La Touraline" class="size-full object-cover outline-1 -outline-offset-1 outline-black/10" />
-          </figure>
-          <figure class="overflow-hidden rounded-2xl">
-            <img src="{{ asset('assets/img/concert-1.jpg') }}" alt="La chorale en représentation" class="aspect-square w-full object-cover outline-1 -outline-offset-1 outline-black/10" />
-          </figure>
-          <figure class="overflow-hidden rounded-2xl">
-            <img src="{{ asset('assets/img/concert-2.jpg') }}" alt="Accompagnement musical pendant un concert" class="aspect-square w-full object-cover outline-1 -outline-offset-1 outline-black/10" />
-          </figure>
-          <figure class="overflow-hidden rounded-2xl">
-            <img src="{{ asset('assets/img/illus-bonheur.jpg') }}" alt="Illustration : le bonheur est dans le chant choral" class="aspect-square w-full object-cover outline-1 -outline-offset-1 outline-black/10" />
-          </figure>
-          <figure class="overflow-hidden rounded-2xl">
-            <img src="{{ asset('assets/img/poster-join.jpg') }}" alt="Affiche : rejoignez la chorale La Touraline" class="aspect-square w-full object-cover outline-1 -outline-offset-1 outline-black/10" />
-          </figure>
-          <figure class="overflow-hidden rounded-2xl">
-            <img src="{{ asset('assets/img/tourelle.jpg') }}" alt="La Tourelle de Marche-en-Famenne" class="aspect-square w-full object-cover outline-1 -outline-offset-1 outline-black/10" />
-          </figure>
-          <figure class="overflow-hidden rounded-2xl">
-            <img src="{{ asset('assets/img/illus-chant.jpg') }}" alt="Illustration : chanter en chorale fait du bien" class="aspect-square w-full object-cover outline-1 -outline-offset-1 outline-black/10" />
-          </figure>
-          <figure class="overflow-hidden rounded-2xl">
-            <img src="{{ asset('assets/img/meme-chante.jpg') }}" alt="Petit clin d'œil musical : quand tu es triste, chante" class="aspect-square w-full object-cover outline-1 -outline-offset-1 outline-black/10" />
-          </figure>
-        </div>
+        @if ($albums->isNotEmpty())
+          <ul role="list" class="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            @foreach ($albums as $album)
+              <li>
+                <x-album-card :album="$album" />
+              </li>
+            @endforeach
+          </ul>
+        @else
+          <div class="mt-12 grid grid-cols-2 gap-4 md:grid-cols-4">
+            <figure class="col-span-2 row-span-2 overflow-hidden rounded-2xl">
+              <img src="{{ asset('assets/img/choir-group.jpg') }}" alt="Photo de groupe de la chorale La Touraline" class="size-full object-cover outline-1 -outline-offset-1 outline-black/10" />
+            </figure>
+            <figure class="overflow-hidden rounded-2xl">
+              <img src="{{ asset('assets/img/concert-1.jpg') }}" alt="La chorale en représentation" class="aspect-square w-full object-cover outline-1 -outline-offset-1 outline-black/10" />
+            </figure>
+            <figure class="overflow-hidden rounded-2xl">
+              <img src="{{ asset('assets/img/concert-2.jpg') }}" alt="Accompagnement musical pendant un concert" class="aspect-square w-full object-cover outline-1 -outline-offset-1 outline-black/10" />
+            </figure>
+            <figure class="overflow-hidden rounded-2xl">
+              <img src="{{ asset('assets/img/illus-bonheur.jpg') }}" alt="Illustration : le bonheur est dans le chant choral" class="aspect-square w-full object-cover outline-1 -outline-offset-1 outline-black/10" />
+            </figure>
+            <figure class="overflow-hidden rounded-2xl">
+              <img src="{{ asset('assets/img/poster-join.jpg') }}" alt="Affiche : rejoignez la chorale La Touraline" class="aspect-square w-full object-cover outline-1 -outline-offset-1 outline-black/10" />
+            </figure>
+            <figure class="overflow-hidden rounded-2xl">
+              <img src="{{ asset('assets/img/tourelle.jpg') }}" alt="La Tourelle de Marche-en-Famenne" class="aspect-square w-full object-cover outline-1 -outline-offset-1 outline-black/10" />
+            </figure>
+            <figure class="overflow-hidden rounded-2xl">
+              <img src="{{ asset('assets/img/illus-chant.jpg') }}" alt="Illustration : chanter en chorale fait du bien" class="aspect-square w-full object-cover outline-1 -outline-offset-1 outline-black/10" />
+            </figure>
+            <figure class="overflow-hidden rounded-2xl">
+              <img src="{{ asset('assets/img/meme-chante.jpg') }}" alt="Petit clin d'œil musical : quand tu es triste, chante" class="aspect-square w-full object-cover outline-1 -outline-offset-1 outline-black/10" />
+            </figure>
+          </div>
+        @endif
       </section>
 
       <!-- ===================== CONTACT ===================== -->
