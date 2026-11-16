@@ -12,4 +12,9 @@ final class CreateConcert extends CreateRecord
     protected static string $resource = ConcertResource::class;
 
     protected static ?string $title = 'Ajouter un concert';
+
+    protected function getRedirectUrl(): string
+    {
+        return self::getResource()::getUrl('view', ['record' => $this->getRecord()]);
+    }
 }

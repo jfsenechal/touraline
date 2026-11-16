@@ -7,7 +7,9 @@ namespace App\Filament\Resources\Concerts;
 use App\Filament\Resources\Concerts\Pages\CreateConcert;
 use App\Filament\Resources\Concerts\Pages\EditConcert;
 use App\Filament\Resources\Concerts\Pages\ListConcerts;
+use App\Filament\Resources\Concerts\Pages\ViewConcert;
 use App\Filament\Resources\Concerts\Schemas\ConcertForm;
+use App\Filament\Resources\Concerts\Schemas\ConcertInfolist;
 use App\Filament\Resources\Concerts\Tables\ConcertsTable;
 use App\Models\Concert;
 use BackedEnum;
@@ -40,6 +42,11 @@ final class ConcertResource extends Resource
         return ConcertForm::configure($schema);
     }
 
+    public static function infolist(Schema $schema): Schema
+    {
+        return ConcertInfolist::configure($schema);
+    }
+
     public static function table(Table $table): Table
     {
         return ConcertsTable::configure($table);
@@ -57,6 +64,7 @@ final class ConcertResource extends Resource
         return [
             'index' => ListConcerts::route('/'),
             'create' => CreateConcert::route('/create'),
+            'view' => ViewConcert::route('/{record}'),
             'edit' => EditConcert::route('/{record}/edit'),
         ];
     }

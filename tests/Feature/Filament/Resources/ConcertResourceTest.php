@@ -2,11 +2,15 @@
 
 declare(strict_types=1);
 
+use App\Filament\Resources\Concerts\ConcertResource;
 use App\Filament\Resources\Concerts\Pages\CreateConcert;
 use App\Filament\Resources\Concerts\Pages\EditConcert;
 use App\Filament\Resources\Concerts\Pages\ListConcerts;
+use App\Filament\Resources\Concerts\Pages\ViewConcert;
 use App\Models\Concert;
 use Filament\Actions\DeleteAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -130,7 +134,7 @@ it('deletes the image file when the concert is deleted', function () {
     $path = UploadedFile::fake()->image('concert.jpg')->store('concerts', 'public');
     $concert = Concert::factory()->create(['image' => $path]);
 
-    livewire(EditConcert::class, [
+    livewire(ViewConcert::class, [
         'record' => $concert->id,
     ])
         ->callAction(DeleteAction::class)
@@ -166,3 +170,49 @@ it('validates the form data', function (array $data, array $errors) {
     '`excerpt` is required' => [['excerpt' => null], ['excerpt' => 'required']],
     '`excerpt` is max 500 characters' => [['excerpt' => Str::random(501)], ['excerpt' => 'max']],
 ]);
+
+it('can render the view page', function () {
+    $concert = Concert::factory()->create();
+
+    livewire(ViewConcert::class, [
+        'record' => $concert->id,
+    ])
+        ->assertOk()
+        ->assertSee($concert->title)
+        ->assertActionExists(EditAction::class)
+        ->assertActionExists(DeleteAction::class);
+});
+
+it('redirects to the view page after creating a concert', function () {
+    $concert = Concert::factory()->make();
+
+    livewire(CreateConcert::class)
+        ->fillForm([
+            'title' => $concert->title,
+            'excerpt' => $concert->excerpt,
+        ])
+        ->call('create')
+        ->assertHasNoFormErrors()
+        ->assertRedirect(ConcertResource::getUrl('view', ['record' => Concert::query()->latest('id')->firstOrFail()]));
+});
+
+it('redirects to the view page after editing a concert', function () {
+    $concert = Concert::factory()->create();
+
+    livewire(EditConcert::class, [
+        'record' => $concert->id,
+    ])
+        ->call('save')
+        ->assertHasNoFormErrors()
+        ->assertRedirect(ConcertResource::getUrl('view', ['record' => $concert]));
+});
+
+it('links to the view page instead of deleting from the edit page', function () {
+    $concert = Concert::factory()->create();
+
+    livewire(EditConcert::class, [
+        'record' => $concert->id,
+    ])
+        ->assertActionExists(ViewAction::class)
+        ->assertActionDoesNotExist(DeleteAction::class);
+});

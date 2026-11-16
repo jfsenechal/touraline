@@ -2,11 +2,15 @@
 
 declare(strict_types=1);
 
+use App\Filament\Resources\Albums\AlbumResource;
 use App\Filament\Resources\Albums\Pages\CreateAlbum;
 use App\Filament\Resources\Albums\Pages\EditAlbum;
 use App\Filament\Resources\Albums\Pages\ListAlbums;
+use App\Filament\Resources\Albums\Pages\ViewAlbum;
 use App\Models\Album;
 use Filament\Actions\DeleteAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -199,7 +203,7 @@ it('deletes the photo files when the album is deleted', function () {
     ];
     $album = Album::factory()->create(['photos' => $paths]);
 
-    livewire(EditAlbum::class, [
+    livewire(ViewAlbum::class, [
         'record' => $album->id,
     ])
         ->callAction(DeleteAction::class)
@@ -237,3 +241,51 @@ it('validates the form data', function (array $data, array $errors) {
     '`description` is max 500 characters' => [['description' => Str::random(501)], ['description' => 'max']],
     '`photos` is required' => [['photos' => []], ['photos' => 'required']],
 ]);
+
+it('can render the view page', function () {
+    $album = Album::factory()->create();
+
+    livewire(ViewAlbum::class, [
+        'record' => $album->id,
+    ])
+        ->assertOk()
+        ->assertSee($album->name)
+        ->assertActionExists(EditAction::class)
+        ->assertActionExists(DeleteAction::class);
+});
+
+it('redirects to the view page after creating an album', function () {
+    $album = Album::factory()->make();
+
+    livewire(CreateAlbum::class)
+        ->fillForm([
+            'name' => $album->name,
+            'photos' => [UploadedFile::fake()->image('one.jpg')],
+        ])
+        ->call('create')
+        ->assertHasNoFormErrors()
+        ->assertRedirect(AlbumResource::getUrl('view', ['record' => Album::query()->latest('id')->firstOrFail()]));
+});
+
+it('redirects to the view page after editing an album', function () {
+    $album = Album::factory()->create([
+        'photos' => [UploadedFile::fake()->image('one.jpg')->store('albums', 'public')],
+    ]);
+
+    livewire(EditAlbum::class, [
+        'record' => $album->id,
+    ])
+        ->call('save')
+        ->assertHasNoFormErrors()
+        ->assertRedirect(AlbumResource::getUrl('view', ['record' => $album]));
+});
+
+it('links to the view page instead of deleting from the edit page', function () {
+    $album = Album::factory()->create();
+
+    livewire(EditAlbum::class, [
+        'record' => $album->id,
+    ])
+        ->assertActionExists(ViewAction::class)
+        ->assertActionDoesNotExist(DeleteAction::class);
+});

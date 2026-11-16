@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Filament\Resources\Albums\Pages;
 
 use App\Filament\Resources\Albums\AlbumResource;
-use Filament\Actions\DeleteAction;
+use Filament\Actions\ViewAction;
 use Filament\Resources\Pages\EditRecord;
 
 final class EditAlbum extends EditRecord
@@ -15,7 +15,12 @@ final class EditAlbum extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            DeleteAction::make(),
+            ViewAction::make(),
         ];
+    }
+
+    protected function getRedirectUrl(): string
+    {
+        return self::getResource()::getUrl('view', ['record' => $this->getRecord()]);
     }
 }

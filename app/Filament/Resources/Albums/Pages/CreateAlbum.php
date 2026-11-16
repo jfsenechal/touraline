@@ -12,4 +12,9 @@ final class CreateAlbum extends CreateRecord
     protected static string $resource = AlbumResource::class;
 
     protected static ?string $title = 'Ajouter un album';
+
+    protected function getRedirectUrl(): string
+    {
+        return self::getResource()::getUrl('view', ['record' => $this->getRecord()]);
+    }
 }

@@ -5,10 +5,14 @@ declare(strict_types=1);
 use App\Filament\Resources\Users\Pages\CreateUser;
 use App\Filament\Resources\Users\Pages\EditUser;
 use App\Filament\Resources\Users\Pages\ListUsers;
+use App\Filament\Resources\Users\Pages\ViewUser;
+use App\Filament\Resources\Users\UserResource;
 use App\Models\User;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Actions\Testing\TestAction;
+use Filament\Actions\ViewAction;
 use Illuminate\Support\Str;
 
 use function Pest\Laravel\assertDatabaseHas;
@@ -118,7 +122,7 @@ it('can update a user', function () {
 it('can delete a user', function () {
     $user = User::factory()->create();
 
-    livewire(EditUser::class, [
+    livewire(ViewUser::class, [
         'record' => $user->id,
     ])
         ->callAction(DeleteAction::class)
@@ -205,4 +209,51 @@ it('accepts a password matching the policy', function () {
         ->call('create')
         ->assertHasNoFormErrors()
         ->assertNotified();
+});
+
+it('can render the view page', function () {
+    $user = User::factory()->create();
+
+    livewire(ViewUser::class, [
+        'record' => $user->id,
+    ])
+        ->assertOk()
+        ->assertSee($user->name)
+        ->assertActionExists(EditAction::class)
+        ->assertActionExists(DeleteAction::class);
+});
+
+it('redirects to the view page after creating a user', function () {
+    $user = User::factory()->make();
+
+    livewire(CreateUser::class)
+        ->fillForm([
+            'name' => $user->name,
+            'email' => $user->email,
+            'password' => 'Touraline2026Ok',
+        ])
+        ->call('create')
+        ->assertHasNoFormErrors()
+        ->assertRedirect(UserResource::getUrl('view', ['record' => User::query()->latest('id')->firstOrFail()]));
+});
+
+it('redirects to the view page after editing a user', function () {
+    $user = User::factory()->create();
+
+    livewire(EditUser::class, [
+        'record' => $user->id,
+    ])
+        ->call('save')
+        ->assertHasNoFormErrors()
+        ->assertRedirect(UserResource::getUrl('view', ['record' => $user]));
+});
+
+it('links to the view page instead of deleting from the edit page', function () {
+    $user = User::factory()->create();
+
+    livewire(EditUser::class, [
+        'record' => $user->id,
+    ])
+        ->assertActionExists(ViewAction::class)
+        ->assertActionDoesNotExist(DeleteAction::class);
 });
